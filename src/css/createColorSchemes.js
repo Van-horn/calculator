@@ -1,7 +1,8 @@
-import schemeData from './data/colorScheme/colorScheme.js'
-import initColors from './data/colorScheme/initColors.js'
+import schemeData from '../data/colorScheme/colorScheme.js'
+import initColors from '../data/colorScheme/initColors.js'
+import getElById from '../utils/getElById.js'
 
-const container = document.getElementById('color_scheme')
+const container = getElById('color_scheme')
 
 schemeData.forEach((item, index) => {
    const scheme = document.createElement('div')
