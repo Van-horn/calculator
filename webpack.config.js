@@ -1,17 +1,18 @@
-const path = require("path")
-require("dotenv").config({ path: path.resolve(__dirname, "./.env") })
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, './.env') })
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = env => ({
-   mode: env.mode ?? "development",
-   entry: path.resolve(__dirname, "src", "index.js"),
+   mode: env.mode ?? 'development',
+   entry: path.resolve(__dirname, 'src', 'index.js'),
    output: {
-      filename: "[contenthash].js",
-      path: path.resolve(__dirname, "docs"),
+      filename: '[contenthash].js',
+      path: path.resolve(__dirname, 'docs'),
       clean: true,
    },
    resolve: {
-      extensions: [".html", ".js"],
+      extensions: ['.html', '.css', '.js'],
    },
    optimization: {
       minimize: true,
@@ -24,15 +25,24 @@ module.exports = env => ({
             test: /\.js$/,
             exclude: /node_modules/,
             use: {
-               loader: "babel-loader",
+               loader: 'babel-loader',
             },
+         },
+         {
+            test: /\.css$/i,
+            use: [MiniCssExtractPlugin.loader, 'css-loader'],
          },
       ],
    },
 
-   plugins: [new HtmlWebpackPlugin({ template: path.resolve(__dirname, "public", "index.html") })],
+   plugins: [
+      new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html') }),
+      new MiniCssExtractPlugin({
+         filename: '[contenthash].css',
+      }),
+   ],
 
-   devtool: "inline-source-map",
+   // devtool: 'source-map',
    devServer: {
       compress: true,
       port: process.env.DEV_PORT,

@@ -17,6 +17,4 @@ RUN npm install -g serve
 
 COPY ./docs ./docs
 
-EXPOSE 1000
-
 CMD ["serve", "-s", "docs"]
