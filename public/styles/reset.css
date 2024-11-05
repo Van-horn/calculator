@@ -1,7 +1,11 @@
 *,
 *::before,
 *::after {
+   all: unset;
    box-sizing: border-box;
+}
+title {
+   display: none;
 }
 
 ul[class],
