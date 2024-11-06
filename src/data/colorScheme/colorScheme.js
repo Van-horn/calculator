@@ -11,13 +11,24 @@ const colorsData = [
       },
    },
    {
+      fond: '#40668b',
+      screen: {
+         fond: '#e9eeef',
+         data: '#25312f',
+      },
+      buttons: {
+         fond: '#25312f',
+         data: '#e9eeef',
+      },
+   },
+   {
       fond: '#333333',
       screen: {
-         fond: 'aliceblue',
+         fond: 'rgb(186, 196, 205)',
          data: '#333333',
       },
       buttons: {
-         fond: 'aliceblue',
+         fond: 'rgb(186, 196, 205)',
          data: '#333333',
       },
    },

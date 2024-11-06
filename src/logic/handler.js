@@ -20,6 +20,7 @@ Object.keys(interactiveButtons).forEach(item => {
 
 buttonsEl.addEventListener('click', e => {
    if (e.target.tagName === 'BUTTON') {
-      dataInput.textContent = calculator.getData().join('')
+      dataInput.scrollLeft = dataInput.scrollWidth
+      dataInput.textContent = calculator.getData()
    }
 })
