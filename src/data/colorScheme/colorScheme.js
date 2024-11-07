@@ -73,5 +73,5 @@ export const initialColors = {
    '--buttonsFond': colorsData[0].buttons.fond,
    '--buttonsColor': colorsData[0].buttons.data,
 }
-console.log(9)
+
 export default colorsData
