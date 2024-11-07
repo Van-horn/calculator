@@ -1,5 +1,6 @@
 const colorsData = [
    {
+      mainFond: 'rgb(186, 196, 205)',
       fond: '#333333',
       screen: {
          fond: '#b8c0a9',
@@ -11,6 +12,8 @@ const colorsData = [
       },
    },
    {
+      mainFond: 'rgb(186, 196, 205)',
+
       fond: '#40668b',
       screen: {
          fond: '#e9eeef',
@@ -22,17 +25,21 @@ const colorsData = [
       },
    },
    {
+      mainFond: 'rgb(186, 196, 205)',
+
       fond: '#333333',
       screen: {
-         fond: 'rgb(186, 196, 205)',
+         fond: 'rgb(151, 154, 157)',
          data: '#333333',
       },
       buttons: {
-         fond: 'rgb(186, 196, 205)',
+         fond: 'rgb(151, 154, 157)',
          data: '#333333',
       },
    },
    {
+      mainFond: 'rgb(186, 196, 205)',
+
       fond: '#019a9c',
       screen: {
          fond: 'aliceblue',
@@ -44,6 +51,8 @@ const colorsData = [
       },
    },
    {
+      mainFond: 'rgb(186, 196, 205)',
+
       fond: '#565c6c',
       screen: {
          fond: '#36b7d4',
@@ -57,6 +66,7 @@ const colorsData = [
 ]
 
 export const initialColors = {
+   '--mainFond': colorsData[0].mainFond,
    '--fond': colorsData[0].fond,
    '--screenFond': colorsData[0].screen.fond,
    '--screenColor': colorsData[0].screen.data,

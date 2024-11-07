@@ -1,72 +1,67 @@
-export default function evaluateExpression(expression) {
-   expression = expression.replace(/\s+/g, '')
+export default function evaluateExpression(tokens) {
+   function applyOperator(operators, values) {
+      const operator = operators.pop()
+      const right = values.pop()
+      const left = values.pop()
 
-   const operators = {
-      '+': { precedence: 1, associativity: 'L' },
-      '-': { precedence: 1, associativity: 'L' },
-      '*': { precedence: 2, associativity: 'L' },
-      '/': { precedence: 2, associativity: 'L' },
-      '%': { precedence: 2, associativity: 'L' },
-   }
-
-   const operate = (a, b, operator) => {
       switch (operator) {
          case '+':
-            return a + b
+            values.push(left + right)
+            break
          case '-':
-            return a - b
+            values.push(left - right)
+            break
          case '*':
-            return a * b
+            values.push(left * right)
+            break
          case '/':
-            return a / b
+            if (right === 0) {
+               throw new Error('Division by zero')
+            }
+            values.push(left / right)
+            break
          case '%':
-            return (a * b) / 100
+            values.push((left * right) / 100)
+            break
          default:
-            return b
+            throw new Error('Unknown operator')
       }
    }
 
-   const formatResult = number => {
-      const str = number.toString()
-      const [integerPart, decimalPart] = str.split('.')
-      if (!decimalPart) {
-         return integerPart
-      }
-      const formattedDecimal = (decimalPart.substring(0, 5) + '00000').substring(0, 5)
-      return integerPart + '.' + formattedDecimal
+   function precedence(op) {
+      if (op === '+' || op === '-') return 1
+      if (op === '*' || op === '/' || op === '%') return 2
+      return 0
    }
 
-   const calculate = tokens => {
-      const output = []
-      const operatorStack = []
+   try {
+      if (!Array.isArray(tokens) || tokens.length === 0) {
+         throw new Error('Invalid expression')
+      }
+
+      const operators = []
+      const values = []
 
       for (const token of tokens) {
          if (!isNaN(token)) {
-            output.push(Number(token))
-         } else if (operators[token]) {
-            while (
-               operatorStack.length &&
-               operators[operatorStack[operatorStack.length - 1]].precedence >= operators[token].precedence
-            ) {
-               const b = output.pop()
-               const a = output.pop()
-               const operator = operatorStack.pop()
-               output.push(operate(a, b, operator))
+            values.push(parseFloat(token))
+         } else if (['+', '-', '*', '/', '%'].includes(token)) {
+            while (operators.length && precedence(operators[operators.length - 1]) >= precedence(token)) {
+               applyOperator(operators, values)
             }
-            operatorStack.push(token)
+            operators.push(token)
+         } else {
+            throw new Error('Invalid input')
          }
       }
 
-      while (operatorStack.length) {
-         const b = output.pop()
-         const a = output.pop()
-         const operator = operatorStack.pop()
-         output.push(operate(a, b, operator))
+      while (operators.length) {
+         applyOperator(operators, values)
       }
 
-      return formatResult(output[0])
+      const result = values.length ? values[0] : null
+      return result !== null && !isNaN(result) ? result.toString() : 'error'
+   } catch (error) {
+      return 'error'
    }
-
-   const tokens = expression.match(/-?\d+\.?\d*|[+\-*/%]/g)
-   return calculate(tokens)
 }
